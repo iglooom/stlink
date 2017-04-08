@@ -915,9 +915,10 @@ stlink_t *stlink_open_usb(enum ugly_loglevel verbose, bool reset, char serial[16
     stlink_version(sl);	
 
     if (reset) {
-        if( sl->version.stlink_v > 1 ) stlink_jtag_reset(sl, 2);
+        if( sl->version.stlink_v > 1 ) stlink_jtag_reset(sl, 0);
         stlink_reset(sl);
         usleep(10000);
+        stlink_jtag_reset(sl, 1);
     }
 
     ret = stlink_load_device_params(sl);
